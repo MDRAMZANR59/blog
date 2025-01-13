@@ -94,40 +94,15 @@
                       -webkit-margin-top-collapse: separate;
                     ">
                             </div>
-                            <div class="html_content">
-                                <p style="text-align: Center">
-                                    <span class="ttr_image"
-                                        style="
-                          float: none;
-                          display: block;
-                          text-align: center;
-                          overflow: hidden;
-                          margin: 0em 0em 2.14em 0em;
-                        "><span><img
-                                                class="ttr_uniform" src="{{ asset('frontend/images/49.jpg') }}"
-                                                style="
-                              max-width: 380px;
-                              max-height: 250px;
-                            " /></span></span><span
-                                        style="
-                          font-family: 'Oxygen', 'Arial';
-                          font-weight: 700;
-                          font-size: 1.714em;
-                        ">Commercial</span>
-                                </p>
-                            </div>
-                            <div
-                                style="
-                      height: 0px;
-                      width: 0px;
-                      overflow: hidden;
-                      -webkit-margin-top-collapse: separate;
-                    ">
-                            </div>
+
                             <div style="clear: both"></div>
                         </div>
                     </div>
                     <div class="clearfix visible-xs-block"></div>
+
+                    <div class="clearfix visible-xs-block"></div>
+                    @foreach ( $data as $item)
+
                     <div class="post_column col-lg-4 col-md-4 col-sm-4 col-xs-12">
                         <div class="ttr_Home_html_column02">
                             <div
@@ -148,7 +123,7 @@
                           overflow: hidden;
                           margin: 0em 0em 2.14em 0em;
                         "><span><img
-                                                class="ttr_uniform" src="{{ asset('frontend/images/50.jpg') }}"
+                                                class="ttr_uniform" src="{{ asset('images/'.$item->image) }}"
                                                 style="
                               max-width: 380px;
                               max-height: 250px;
@@ -157,7 +132,7 @@
                           font-family: 'Oxygen', 'Arial';
                           font-weight: 700;
                           font-size: 1.714em;
-                        ">Agriculture</span>
+                        ">{{$item->title}}</span>
                                 </p>
                             </div>
                             <div
@@ -171,51 +146,9 @@
                             <div style="clear: both"></div>
                         </div>
                     </div>
-                    <div class="clearfix visible-xs-block"></div>
-                    <div class="post_column col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                        <div class="ttr_Home_html_column03">
-                            <div
-                                style="
-                      height: 0px;
-                      width: 0px;
-                      overflow: hidden;
-                      -webkit-margin-top-collapse: separate;
-                    ">
-                            </div>
-                            <div class="html_content">
-                                <p style="text-align: Center">
-                                    <span class="ttr_image"
-                                        style="
-                          float: none;
-                          display: block;
-                          text-align: center;
-                          overflow: hidden;
-                          margin: 0em 0em 2.14em 0em;
-                        "><span><img
-                                                class="ttr_uniform" src="{{ asset('frontend/images/51.jpg') }}"
-                                                style="
-                              max-width: 380px;
-                              max-height: 250px;
-                            " /></span></span><span
-                                        style="
-                          font-family: 'Oxygen', 'Arial';
-                          font-weight: 700;
-                          font-size: 1.714em;
-                        ">Private
-                                        Home</span>
-                                </p>
-                            </div>
-                            <div
-                                style="
-                      height: 0px;
-                      width: 0px;
-                      overflow: hidden;
-                      -webkit-margin-top-collapse: separate;
-                    ">
-                            </div>
-                            <div style="clear: both"></div>
-                        </div>
-                    </div>
+
+
+                    @endforeach
                     <div class="clearfix visible-lg-block visible-sm-block visible-md-block visible-xs-block"></div>
                 </div>
                 <div class="ttr_Home_html_row1 row">

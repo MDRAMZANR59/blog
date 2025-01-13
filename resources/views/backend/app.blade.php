@@ -25,11 +25,28 @@
         </div>
     @endif
     {{-- end auth --}}
+    @if (session('success'))
+        <div class="message success">
+            <h1 class="text-center">{{ session('success') }}</h1>
+        </div>
+    @endif
+
+    @if (session('update'))
+        <div class="message update">
+            <h1 class="text-center" >{{ session('update') }}</h1>
+        </div>
+    @endif
+    @if (session('delete'))
+        <div class="message deleted">
+            <h1 class="text-center">{{ session('delete') }}</h1>
+        </div>
+    @endif
 
     @include('backend.partials.header');
 
     @yield('Content');
 
     @include('backend.partials.script')
+    @stack('script')
 </body>
 </html>

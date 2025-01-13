@@ -8,12 +8,7 @@
 
     <div class="menu-items">
         <ul class="nav-links">
-            <li>
-                <a href="#" class="menu-link">
-                    <i class="uil uil-estate"></i>
-                    <span class="link-name">Blog List</span>
-                </a>
-            </li>
+
         </ul>
 
         <ul class="logout-mode">

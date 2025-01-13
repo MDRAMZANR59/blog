@@ -17,15 +17,16 @@ class BlogController extends Controller
     {
         if ($request->ajax()) {
 
-            // Retrieve the blog posts from the Blog model
-            $data = Blog::query();
+            $data = Blog::get();
 
             return DataTables::of($data)
                 ->addIndexColumn()  // Adding index column for table pagination
                 ->addColumn('action', function($row){
                     // Button to view a specific blog post
-                    $btn = '<a href="javascript:void(0)" class="view btn btn-primary btn-sm">View</a>';
-                    return $btn;
+                    $edit = '<a href="' . route('editBlog', $row->id) . '" class="edit d-inline btn btn-primary btn-sm">Edit</a>';
+                    $delete='<a href="'.route('deleteBlog',$row->id).'"class="delete d-inline btn btn-danger btn-sm">Delete</a>';
+                    return $edit.''.$delete;
+                    // return $edit.''.$delete;
                 })
                 ->rawColumns(['action'])  // Ensure that HTML in 'action' column is rendered
                 ->make(true);  // Return the DataTables response
@@ -34,6 +35,61 @@ class BlogController extends Controller
         // Return the view to display the blogs
         return view('backend.layout.home');  // This view will contain your DataTables listing
     }
+    //blog form
+    public function create(){
+        return view('backend.layout.addblog');
+    }
+    //store Blog
+    public function store(Request $request){
+       $validation=$request->validate([
+        'title'=>'required',
+        'description'=>'required',
+        'image'=>'nullable|image|mimes:jpeg,jpg,png,gif|max:10240'
+       ]);
+      $images=null;
+      if($request->image){
+        $images=time().'.'.$request->image->extension();
+        $request->image->move(public_path('images'),$images);
+      };
+      $model=new Blog();
+      $model->title=$request->title;
+      $model->description=$request->description;
+      $model->image=$images;
+      $model->save();
+      return redirect()->route('admin')->with('success','Data Save Successfull');
+    }
+    //edit Blog
+    public function edit($id){
+        $data=Blog::findOrFail($id);
+        return view('backend.layout.editBlog',['olddatas'=>$data]);
+    }
+    //update Blog
+    public function update($id, Request $request){
+        $validation=$request->validate([
+            'title'=>'required',
+            'description'=>'required',
+            'image'=>'nullable|image|mimes:jpeg,jpg,png,gif|max:10240'
+           ]);
+            $model=Blog::findOrFail($id);
+
+            $model->title=$request->title;
+            $model->description=$request->description;
+
+          if($request->image){
+            $images=time().'.'.$request->image->extension();
+            $request->image->move(public_path('images'),$images);
+            $model->image=$images;
+          };
+            $model->save();
+            return redirect()->route('admin')->with('update','Data update Successfull');
+    }
+    //delete blog
+    public function distroy($id){
+        $model=Blog::findOrFail($id);
+        $model->delete();
+        return redirect()->route('admin')->with('delete','Data Deleted Successfull');
+
+    }
 
     /**
      * Show the details of a specific blog post.
@@ -41,12 +97,5 @@ class BlogController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
-        // Retrieve the blog post by ID
-        $blog = Blog::findOrFail($id);
 
-        // Return the view to show the blog details
-        return view('backend.layout.home', compact('blog'));
-    }
 }

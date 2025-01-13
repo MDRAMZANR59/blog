@@ -3,7 +3,11 @@
 <body>
     <div class="container">
         <div class="card mt-5">
-            <h3 class="card-header p-3">Blog List</h3>
+            <div class="card-header p-3">
+                <h3 class="d-inline">Blog List</h3>
+                <!-- Add Blog Button -->
+                <a href="{{ route('blogForm') }}" class="btn btn-primary btn-sm float-end">Add Blog</a>
+            </div>
             <div class="card-body">
                 <table class="table table-bordered data-table">
                     <thead>
@@ -23,23 +27,29 @@
     </div>
 </body>
 
+@push('script')
 <script type="text/javascript">
     $(function () {
+        var table = $('.data-table').DataTable({
+            processing: true,
+            serverSide: true,
+            iDisplayLength: 25,
+            retrieve: true,
 
-      var table = $('.data-table').DataTable({
-          processing: true,
-          serverSide: true,
-          ajax: "{{ route('admin') }}",  // Update to point to the correct route for blogs
-          columns: [
-            //   {data: 'DT_RowIndex', name: 'DT_RowIndex'},  // Index column for row number
-              {data: 'title', name: 'title'},  // Blog post title
-              {data: 'description', name: 'description'},  // Blog post description
-              {data: 'image', name: 'image', orderable: false, searchable: false},  // Optional image column
-              {data: 'action', name: 'action', orderable: false, searchable: false}  // Action column for view/edit buttons
-          ]
-      });
+            ajax: "{{ route('admin') }}",
 
+            columns: [
+                {data: 'id', name: 'id'},
+                {data: 'title', name: 'title'},
+                {data: 'description', name: 'description'},
+                {data: 'image', name: 'image', render: function(data, type, row) {
+                    return data ? '<img src="{{ asset('images') }}/'+ data +'" alt="image" style="width: 50px; height: 50px;">' : 'No image';
+                }},
+                {data: 'action', name: 'action', orderable: false, searchable: false}
+            ]
+        });
     });
-  </script>
+</script>
+@endpush
 
 @endsection

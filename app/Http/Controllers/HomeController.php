@@ -2,16 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Blog;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
 
     public function index(){
-        return view(view: 'frontend.layout.home');
+        $data=Blog::all();
+        return view('frontend.layout.home',compact('data'));
     }
     public function showBlog(){
-        return view('frontend.layout.blogList');
+        // $allbolgs=Blog::findOrFail();
+        return view('frontend.layout.blogList',['datas'=>Blog::all()]);
     }
     public function login(){
         return view('auth.login');
