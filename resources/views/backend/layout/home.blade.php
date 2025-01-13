@@ -1,28 +1,45 @@
 @extends('backend.app')
 @section('Content')
-<div class="dashboard">
-    <div class="top">
-        <i class="uil uil-bars sidebar-toggle"></i>
-
-        <div class="search-box">
-            <i class="uil uil-search"></i>
-            <input type="text" placeholder="Search here..." class="search-input">
-        </div>
-
-        <img src="{{asset('backend/images/profile.jpg')}}" alt="User Profile" class="user-profile">
-    </div>
-
-    <div class="dash-content">
-        <div class="activity">
-            <div class="title">
-                <i class="uil uil-clock-three"></i>
-                <span class="text">All Blog</span>
-            </div>
-            <div class="activity-data">
-
+<body>
+    <div class="container">
+        <div class="card mt-5">
+            <h3 class="card-header p-3">Blog List</h3>
+            <div class="card-body">
+                <table class="table table-bordered data-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Title</th>
+                            <th>Description</th>
+                            <th>Image</th>
+                            <th width="100px">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
-</div>
+</body>
+
+<script type="text/javascript">
+    $(function () {
+
+      var table = $('.data-table').DataTable({
+          processing: true,
+          serverSide: true,
+          ajax: "{{ route('admin') }}",  // Update to point to the correct route for blogs
+          columns: [
+            //   {data: 'DT_RowIndex', name: 'DT_RowIndex'},  // Index column for row number
+              {data: 'title', name: 'title'},  // Blog post title
+              {data: 'description', name: 'description'},  // Blog post description
+              {data: 'image', name: 'image', orderable: false, searchable: false},  // Optional image column
+              {data: 'action', name: 'action', orderable: false, searchable: false}  // Action column for view/edit buttons
+          ]
+      });
+
+    });
+  </script>
 
 @endsection

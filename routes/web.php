@@ -34,7 +34,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get('admin',[AdminController::class,'index'])->name('admin')->middleware(['auth', 'verified'])->name('admindashboard');
+Route::get('admin', [BlogController::class, 'index'])->name('admin')->middleware(['auth', 'verified']);
+// Route::get('admin',[AdminController::class,'index'])->name('admin')->middleware(['auth', 'verified'])->name('admindashboard');
 
 Route::get('blogList', [BlogController::class, 'show'])->name('blogList');
 
