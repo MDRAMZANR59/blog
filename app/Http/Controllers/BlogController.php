@@ -21,6 +21,10 @@ class BlogController extends Controller
 
             return DataTables::of($data)
                 ->addIndexColumn()  // Adding index column for table pagination
+                ->addColumn('image', function($row){
+                    $url = asset($row->image);
+                    return "<img src='$url' width='100'>";
+                })
                 ->addColumn('action', function($row){
                     // Button to view a specific blog post
                     $edit = '<a href="' . route('editBlog', $row->id) . '" class="edit d-inline btn btn-primary btn-sm">Edit</a>';
@@ -28,7 +32,7 @@ class BlogController extends Controller
                     return $edit.''.$delete;
                     // return $edit.''.$delete;
                 })
-                ->rawColumns(['action'])  // Ensure that HTML in 'action' column is rendered
+                ->rawColumns(['image', 'action'])  // Ensure that HTML in 'action' column is rendered
                 ->make(true);  // Return the DataTables response
         }
 
@@ -46,16 +50,21 @@ class BlogController extends Controller
         'description'=>'required',
         'image'=>'nullable|image|mimes:jpeg,jpg,png,gif|max:10240'
        ]);
+
       $images=null;
       if($request->image){
-        $images=time().'.'.$request->image->extension();
+
+        $images = time().'.'.$request->image->extension();
         $request->image->move(public_path('images'),$images);
+
       };
+
       $model=new Blog();
       $model->title=$request->title;
       $model->description=$request->description;
       $model->image=$images;
       $model->save();
+
       return redirect()->route('admin')->with('success','Data Save Successfull');
     }
     //edit Blog
@@ -65,27 +74,38 @@ class BlogController extends Controller
     }
     //update Blog
     public function update($id, Request $request){
-        $validation=$request->validate([
-            'title'=>'required',
-            'description'=>'required',
-            'image'=>'nullable|image|mimes:jpeg,jpg,png,gif|max:10240'
-           ]);
-            $model=Blog::findOrFail($id);
+        {
+            $validation = $request->validate([
+                'title' => 'required',
+                'description' => 'required',
+                'image' => 'nullable|image|mimes:jpeg,jpg,png,gif|max:10240'
+            ]);
 
-            $model->title=$request->title;
-            $model->description=$request->description;
+            $model = Blog::findOrFail($id);
+            $model->title = $request->title;
+            $model->description = $request->description;
 
-          if($request->image){
-            $images=time().'.'.$request->image->extension();
-            $request->image->move(public_path('images'),$images);
-            $model->image=$images;
-          };
+            if ($request->hasFile('image')) {
+                if ($model->image && file_exists(public_path('images/' . $model->image))) {
+                    unlink(public_path('images/' . $model->image));
+                }
+
+                $newImage = time() . '.' . $request->image->extension();
+                $request->image->move(public_path('images'), $newImage);
+
+                $model->image = $newImage;
+            }
+
             $model->save();
-            return redirect()->route('admin')->with('update','Data update Successfull');
+
+            return redirect()->route('admin')->with('update', 'Data Updated Successfully');
+        }
     }
     //delete blog
     public function distroy($id){
         $model=Blog::findOrFail($id);
+        if ($model->image && file_exists(public_path('images/' . $model->image))) {
+            unlink(public_path('images/' . $model->image));
         $model->delete();
         return redirect()->route('admin')->with('delete','Data Deleted Successfull');
 
@@ -98,4 +118,5 @@ class BlogController extends Controller
      * @return \Illuminate\Http\Response
      */
 
+}
 }

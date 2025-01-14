@@ -42,9 +42,7 @@
                 {data: 'id', name: 'id'},
                 {data: 'title', name: 'title'},
                 {data: 'description', name: 'description'},
-                {data: 'image', name: 'image', render: function(data, type, row) {
-                    return data ? '<img src="{{ asset('images') }}/'+ data +'" alt="image" style="width: 50px; height: 50px;">' : 'No image';
-                }},
+                {data: 'image', name: 'image'},
                 {data: 'action', name: 'action', orderable: false, searchable: false}
             ]
         });

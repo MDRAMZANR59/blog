@@ -9,13 +9,19 @@ class HomeController extends Controller
 {
 
     public function index(){
-        $data=Blog::all();
-        return view('frontend.layout.home',compact('data'));
+        $data = Blog::all();
+        return view('frontend.layout.home', compact('data'));
     }
+
+
     public function showBlog(){
-        // $allbolgs=Blog::findOrFail();
-        return view('frontend.layout.blogList',['datas'=>Blog::all()]);
+
+        $blogs = Blog::all();
+        return view('frontend.layout.blogList', compact('blogs') );
     }
+
+
+
     public function login(){
         return view('auth.login');
     }

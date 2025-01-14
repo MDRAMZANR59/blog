@@ -13,7 +13,7 @@
 
         <ul class="logout-mode">
             <li>
-                <form action="logout" method="POST">
+                <form action="{{ route('logout') }}" method="POST">
                     @csrf
                     <i class="uil uil-signout"></i>
                     <button type="submit" class="logout-btn">

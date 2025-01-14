@@ -17,18 +17,18 @@
                     <!-- Blog Title -->
                     <div class="mb-3">
                         <label for="title" class="form-label">Title</label>
-                        <input type="text" class="form-control" id="title" value="{{ $olddatas->title }}" name="title" required>
+                        <input type="text" class="form-control" id="title" value="{{ $olddatas->title }}" name="title" >
                         @error('title')
-                            <p class="text-red">{{ $message }}</p>
+                            <p class="text-danger">{{ $message }}</p>
                         @enderror
                     </div>
 
                     <!-- Blog Description -->
                     <div class="mb-3">
                         <label for="description" class="form-label">Description</label>
-                        <textarea class="form-control" id="description" name="description" rows="4" required>{{ $olddatas->description }}</textarea>
+                        <textarea class="form-control" id="description" name="description" rows="4" >{{ $olddatas->description }}</textarea>
                         @error('description')
-                            <p class="text-red">{{ $message }}</p>
+                            <p class="text-danger">{{ $message }}</p>
                         @enderror
                     </div>
 
@@ -37,7 +37,7 @@
                         <label for="image" class="form-label">Image</label>
                         <input type="file" class="form-control" id="image" value="{{ $olddatas->image }}" name="image" accept="image/*">
                         @error('image')
-                            <p class="text-red">{{ $message }}</p>
+                            <p class="text-danger">{{ $message }}</p>
                         @enderror
                     </div>
 
