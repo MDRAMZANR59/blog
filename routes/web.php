@@ -1,8 +1,9 @@
 <?php
 
+use App\Http\Middleware\blogidmidd;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\HomeController;
 use App\Http\Controllers\BlogController;
+use App\Http\Controllers\HomeController;
 
 Route::get('/',[HomeController::class,'index'])->name('home');
 //all bolg home page
@@ -12,7 +13,7 @@ Route::get('home/singleBlog/{id}',[HomeController::class,'singleblog'])->name('s
 //index page
 Route::get('/admin/blogs', [BlogController::class, 'index'])->name('admin')->middleware(['auth', 'verified']);
 //blog add form
-Route::get('/admin/addblog',[BlogController::class,'create'])->name('blogForm');
+Route::get('/admin/addblog',[BlogController::class,'create'])->name('blogForm')->middleware(blogidmidd::class);
 //store blog
 Route::POST('/blogStore',[BlogController::class,'store'])->name('blogStore');
 //edit blog
