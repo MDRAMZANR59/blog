@@ -26,9 +26,9 @@
                         @foreach ($blogs as $data)
                             <div class="post_column col-lg-4 col-md-6 col-sm-6 col-xs-12">
                                 <div class="ttr_Projects_html_column01">
-                                    <div class="html_content">
-                                        <span class="ttr_image" style="float: left;overflow: hidden; margin: 0em 0em 2.14em 0em;">
-                                            <img class="ttr_uniform" src="{{ asset($data->image) }}" style="width: 200px; height: 150px; border: 5px solid #ddd; border-radius: 10px; transition: transform 0.3s;">
+                                    <div class="html_content" style="text-align: center !important">
+                                        <span class="ttr_image">
+                                            <img class="ttr_uniform" src="{{ asset($data->image) }}" style="width: 100% !important; height: 200px !important; object-fit: cover; border: 5px solid #ddd; border-radius: 10px; transition: transform 0.3s;">
                                         </span>
                                         <span style="font-family: 'Oxygen', 'Arial'; font-weight: 700; font-size: 1.714em; color: #303030;">
                                             {{ $data->title }}

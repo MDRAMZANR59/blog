@@ -16,16 +16,13 @@
                             Praesent vestibulum molestie lacus. Aeneanummy hendrerit mauris. Phasellus porta. Fusce sumi. Cum sociis natoque penatibus et magnis dis parturient mus.
                         </p>
                     </div>
-
-
-
                 @foreach ($data as $item)
                 <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12" style="height: 350px">
                     <div class="ttr_Home_html_column02">
                         <div class="html_content text-center">
                             <!-- Image Container with Hover Effect -->
                             <div class="image-container position-relative">
-                                <img class="ttr_uniform" src="{{ $item->image }}" />
+                                <img style="width: 100% !important; height: 200px !important; object-fit: cover;" class="ttr_uniform" src="{{ $item->image }}" />
                                 <a href="{{ route('singleBlog', $item->id) }}" class="btn btn-success read-more-btn position-absolute top-50 start-50 translate-middle">Read More</a>
                             </div>
                             <span class="font-weight-bold" style="font-size: 1.714em;">{{ $item->title }}</span>
