@@ -27,14 +27,12 @@
                             <div class="post_column col-lg-4 col-md-6 col-sm-6 col-xs-12">
                                 <div class="ttr_Projects_html_column01">
                                     <div class="html_content">
-                                        <p>
-                                            <span class="ttr_image" style="float: left; overflow: hidden; margin: 0em 0em 2.14em 0em;">
-                                                <img class="ttr_uniform" src="{{ asset($data->image) }}" style="max-width: 350px; max-height: 233px; border: 5px solid #ddd; border-radius: 10px; transition: transform 0.3s;">
-                                            </span>
-                                            <span style="font-family: 'Oxygen', 'Arial'; font-weight: 700; font-size: 1.714em; color: #303030;">
-                                                {{ $data->title }}
-                                            </span>
-                                        </p>
+                                        <span class="ttr_image" style="float: left;overflow: hidden; margin: 0em 0em 2.14em 0em;">
+                                            <img class="ttr_uniform" src="{{ asset($data->image) }}" style="width: 200px; height: 150px; border: 5px solid #ddd; border-radius: 10px; transition: transform 0.3s;">
+                                        </span>
+                                        <span style="font-family: 'Oxygen', 'Arial'; font-weight: 700; font-size: 1.714em; color: #303030;">
+                                            {{ $data->title }}
+                                        </span>
                                         <p style="margin: 0.71em 0em 0.36em 0em; line-height: 1.549; font-family: 'Lato', 'Arial'; font-weight: 300; font-size: 1.143em; color: #434444;">
                                             {{ Str::limit($data->description, 100) }}
                                         </p>
