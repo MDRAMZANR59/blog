@@ -42,7 +42,7 @@
                     </div>
 
                     <!-- Submit Button -->
-                    <button type="submit" class="btn btn-primary">Add Blog</button>
+                    <button type="submit" class="btn btn-primary">Update Blog</button>
                 </form>
             </div>
         </div>

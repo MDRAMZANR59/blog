@@ -51,7 +51,7 @@ class BlogController extends Controller
       $images=null;
       if($request->image){
 
-        $images = time().'.'.$request->image->extension();
+        $images = 'images/'.time().'.'.$request->image->extension();
         $request->image->move(public_path('images'),$images);
 
       };
@@ -83,11 +83,11 @@ class BlogController extends Controller
             $model->description = $request->description;
 
             if ($request->hasFile('image')) {
-                if ($model->image && file_exists(public_path('images/' . $model->image))) {
-                    unlink(public_path('images/' . $model->image));
+                if ($model->image && file_exists(public_path($model->image))) {
+                    unlink(public_path($model->image));
                 }
 
-                $newImage = time() . '.' . $request->image->extension();
+                $newImage = 'images/'.time().'.'.$request->image->extension();
                 $request->image->move(public_path('images'), $newImage);
 
                 $model->image = $newImage;
@@ -105,7 +105,7 @@ class BlogController extends Controller
         $model = Blog::findOrFail($id);
 
         if ($model->image) {
-            $imagePath = public_path('images/' . $model->image);
+            $imagePath = public_path( $model->image);
             if (file_exists($imagePath)) {
                 unlink($imagePath);
             } else {
