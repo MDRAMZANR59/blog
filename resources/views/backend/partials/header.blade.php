@@ -15,21 +15,11 @@
             <li>
                 <form action="{{ route('logout') }}" method="POST">
                     @csrf
-                    <i class="uil uil-signout"></i>
-                    <button type="submit" class="logout-btn">
+                    <button type="submit" class="btn btn-info d-flex align-items-center">
+                        <i class="fas fa-sign-out-alt me-2"></i>
                         <span class="link-name">Logout</span>
                     </button>
                 </form>
-            </li>
-
-            <li class="mode">
-                <a href="#" class="mode-toggle-link">
-                    <i class="uil uil-moon"></i>
-                    <span class="link-name">Dark Mode</span>
-                </a>
-                <div class="mode-toggle">
-                    <span class="switch"></span>
-                </div>
             </li>
         </ul>
     </div>

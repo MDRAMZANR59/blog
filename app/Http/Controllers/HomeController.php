@@ -20,6 +20,11 @@ class HomeController extends Controller
         return view('frontend.layout.blogList', compact('blogs') );
     }
 
+    public function singleblog($id){
+        $blogs = Blog::findOrFail($id);
+        return view('frontend.layout.singleBlog',compact('blogs'));
+    }
+
 
 
     public function login(){

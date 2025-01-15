@@ -90,9 +90,6 @@
                     <div class="clearfix visible-lg-block visible-sm-block visible-md-block visible-xs-block"></div>
                 </div>
 
-
-
-
             </div>
         </div>
         <div style="clear: both"></div>

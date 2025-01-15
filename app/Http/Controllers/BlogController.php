@@ -20,24 +20,21 @@ class BlogController extends Controller
             $data = Blog::get();
 
             return DataTables::of($data)
-                ->addIndexColumn()  // Adding index column for table pagination
+                ->addIndexColumn()
                 ->addColumn('image', function($row){
                     $url = asset($row->image);
                     return "<img src='$url' width='100'>";
                 })
                 ->addColumn('action', function($row){
-                    // Button to view a specific blog post
                     $edit = '<a href="' . route('editBlog', $row->id) . '" class="edit d-inline btn btn-primary btn-sm">Edit</a>';
                     $delete='<a href="'.route('deleteBlog',$row->id).'"class="delete d-inline btn btn-danger btn-sm">Delete</a>';
                     return $edit.''.$delete;
-                    // return $edit.''.$delete;
                 })
-                ->rawColumns(['image', 'action'])  // Ensure that HTML in 'action' column is rendered
-                ->make(true);  // Return the DataTables response
+                ->rawColumns(['image', 'action'])
+                ->make(true);
         }
 
-        // Return the view to display the blogs
-        return view('backend.layout.home');  // This view will contain your DataTables listing
+        return view('backend.layout.home');
     }
     //blog form
     public function create(){
@@ -102,21 +99,26 @@ class BlogController extends Controller
         }
     }
     //delete blog
-    public function distroy($id){
-        $model=Blog::findOrFail($id);
-        if ($model->image && file_exists(public_path('images/' . $model->image))) {
-            unlink(public_path('images/' . $model->image));
+    public function distroy($id)
+{
+    try {
+        $model = Blog::findOrFail($id);
+
+        if ($model->image) {
+            $imagePath = public_path('images/' . $model->image);
+            if (file_exists($imagePath)) {
+                unlink($imagePath);
+            } else {
+                \Log::error('Image file not found: ' . $imagePath);
+            }
+        }
+
         $model->delete();
-        return redirect()->route('admin')->with('delete','Data Deleted Successfull');
 
+        return redirect()->route('admin')->with('delete', 'Data Deleted Successfully');
+    } catch (\Exception $e) {
+        \Log::error('Error deleting blog: ' . $e->getMessage());
+        return redirect()->route('admin')->with('error', 'Failed to delete the blog');
     }
-
-    /**
-     * Show the details of a specific blog post.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-
 }
 }
