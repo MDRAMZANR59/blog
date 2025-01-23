@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Blog;
+use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
+use Flasher\Prime\FlasherInterface;
 
 class BlogController extends Controller
 {
@@ -41,7 +42,7 @@ class BlogController extends Controller
         return view('backend.layout.addblog');
     }
     //store Blog
-    public function store(Request $request){
+    public function store(Request $request, FlasherInterface $flasher){
        $validation=$request->validate([
         'title'=>'required',
         'description'=>'required',
@@ -70,7 +71,7 @@ class BlogController extends Controller
         return view('backend.layout.editBlog',['olddatas'=>$data]);
     }
     //update Blog
-    public function update($id, Request $request){
+    public function update($id, Request $request, FlasherInterface $flasher){
         {
             $validation = $request->validate([
                 'title' => 'required',
@@ -95,30 +96,27 @@ class BlogController extends Controller
 
             $model->save();
 
-            return redirect()->route('admin')->with('update', 'Data Updated Successfully');
+            return redirect()->route('admin')->with('info', 'Data Updated Successfully');
         }
     }
     //delete blog
-    public function distroy($id)
+    public function distroy($id, FlasherInterface $flasher)
 {
-    try {
-        $model = Blog::findOrFail($id);
 
-        if ($model->image) {
-            $imagePath = public_path( $model->image);
-            if (file_exists($imagePath)) {
-                unlink($imagePath);
-            } else {
-                \Log::error('Image file not found: ' . $imagePath);
-            }
+    $model = Blog::findOrFail($id);
+
+    if ($model->image) {
+        $imagePath = public_path( $model->image);
+        if (file_exists($imagePath)) {
+            unlink($imagePath);
+        } else {
+            \Log::error('Image file not found: ' . $imagePath);
         }
-
-        $model->delete();
-
-        return redirect()->route('admin')->with('delete', 'Data Deleted Successfully');
-    } catch (\Exception $e) {
-        \Log::error('Error deleting blog: ' . $e->getMessage());
-        return redirect()->route('admin')->with('error', 'Failed to delete the blog');
     }
+
+    $model->delete();
+
+    return redirect()->route('admin')->with('warning', 'Data Deleted Successfully');
+
 }
 }
