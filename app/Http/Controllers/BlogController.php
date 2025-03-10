@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Blog;
 use Illuminate\Http\Request;
+use App\Events\BlogStoreEvent;
 use Yajra\DataTables\DataTables;
 use Flasher\Prime\FlasherInterface;
 
@@ -62,7 +63,8 @@ class BlogController extends Controller
       $model->description=$request->description;
       $model->image=$images;
       $model->save();
-
+      //event
+      event(new BlogStoreEvent($model));
       return redirect()->route('admin')->with('success','Data Save Successfull');
     }
     //edit Blog
@@ -100,7 +102,7 @@ class BlogController extends Controller
         }
     }
     //delete blog
-    public function distroy($id, FlasherInterface $flasher)
+    public function destroy($id, FlasherInterface $flasher)
 {
 
     $model = Blog::findOrFail($id);

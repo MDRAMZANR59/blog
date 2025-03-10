@@ -5,6 +5,7 @@ use App\Http\Controllers\BlogController;
 use App\Http\Controllers\HomeController;
 
 Route::get('/',[HomeController::class,'index'])->name('home');
+// dd(App());
 //all bolg home page
 Route::get('/home/all-blog',[HomeController::class,'showBlog'])->name('allBlog');
 //single blog page
