@@ -12,13 +12,13 @@ use Illuminate\Queue\SerializesModels;
 class AlartMail extends Mailable
 {
     use Queueable, SerializesModels;
-    public $model;
+    public $pass_to_blade;
     /**
      * Create a new message instance.
      */
-    public function __construct($model)
+    public function __construct($data_from_listener)
     {
-        $this->model = $model;
+        $this->pass_to_blade = $data_from_listener;
     }
 
     /**
@@ -41,7 +41,7 @@ class AlartMail extends Mailable
     //     );
     // }
     public function build(){
-        return $this->view('backend.partials.mail',['data'=>$this->model]);
+        return $this->view('backend.partials.mail',['data'=>$this->pass_to_blade]);
     }
     /**
      * Get the attachments for the message.

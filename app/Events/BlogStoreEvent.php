@@ -13,13 +13,13 @@ use Illuminate\Queue\SerializesModels;
 class BlogStoreEvent
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
-    public $model;
+    public $setName_Own_evenName;
     /**
      * Create a new event instance.
      */
-    public function __construct($model)
+    public function __construct($cach_even_from_Controller)
     {
-        $this->model = $model;
+        $this->setName_Own_evenName = $cach_even_from_Controller;
     }
 
     /**

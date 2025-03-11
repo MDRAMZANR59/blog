@@ -22,8 +22,8 @@ class StoreBlog
     /**
      * Handle the event.
      */
-    public function handle(BlogStoreEvent $event): void
+    public function handle(BlogStoreEvent $cachEven): void
     {
-        Mail::to(Auth::user()->email)->send(new AlartMail($event->model));
+        Mail::to(Auth::user()->email)->send(new AlartMail($cachEven->setName_Own_evenName));
     }
 }
