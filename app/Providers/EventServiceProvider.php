@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use App\Listeners\StoreBlog;
 use App\Events\BlogStoreEvent;
+use App\Events\DeleteBlogEvent;
+use App\Listeners\DeleteBlogListener;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
@@ -22,6 +24,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         BlogStoreEvent::class => [
             StoreBlog::class,
+        ],
+        DeleteBlogEvent::class => [
+            DeleteBlogListener::class,
         ]
     ];
 
