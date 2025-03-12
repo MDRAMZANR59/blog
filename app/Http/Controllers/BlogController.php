@@ -8,6 +8,7 @@ use App\Events\BlogStoreEvent;
 use App\Events\DeleteBlogEvent;
 use Yajra\DataTables\DataTables;
 use Flasher\Prime\FlasherInterface;
+use Illuminate\Support\Facades\Log;
 
 class BlogController extends Controller
 {
@@ -107,22 +108,25 @@ class BlogController extends Controller
     //delete blog
     public function distroy($id, FlasherInterface $flasher)
     {
-
         $model = Blog::findOrFail($id);
 
+        // Delete image if it exists
         if ($model->image) {
             $imagePath = public_path($model->image);
             if (file_exists($imagePath)) {
                 unlink($imagePath);
             } else {
-                \Log::error('Image file not found: ' . $imagePath);
+                Log::error('Image file not found: ' . $imagePath);
             }
         }
 
+        // Delete the blog post
         $model->delete();
 
-        //DeleteBlogEvent
+        // Fire the DeleteBlogEvent
         event(new DeleteBlogEvent($model));
+
+        Log::info("Blog Deleted: " . $model->title);
 
         return redirect()->route('admin')->with('warning', 'Data Deleted Successfully');
     }

@@ -2,24 +2,26 @@
 
 namespace App\Events;
 
+use Illuminate\Support\Facades\Log;
 use Illuminate\Broadcasting\Channel;
-use Illuminate\Broadcasting\InteractsWithSockets;
-use Illuminate\Broadcasting\PresenceChannel;
-use Illuminate\Broadcasting\PrivateChannel;
-use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
-use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Broadcasting\PrivateChannel;
+use Illuminate\Broadcasting\PresenceChannel;
+use Illuminate\Foundation\Events\Dispatchable;
+use Illuminate\Broadcasting\InteractsWithSockets;
+use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
 class DeleteBlogEvent
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
-    public $deletedData;
+    public $set_name_for_listener;
     /**
      * Create a new event instance.
      */
     public function __construct($model)
     {
-        $this->deletedData = $model;
+        $this->set_name_for_listener = $model;
+        Log::info("Even Worked Data Pass");
     }
 
     /**

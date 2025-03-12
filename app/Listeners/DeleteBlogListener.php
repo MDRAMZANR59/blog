@@ -5,12 +5,13 @@ namespace App\Listeners;
 use queue;
 use App\Mail\DeleteBlogMail;
 use App\Events\DeleteBlogEvent;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class DeleteBlogListener implements ShouldQueue
+class DeleteBlogListener
 {
     use InteractsWithQueue;
     /**
@@ -24,8 +25,10 @@ class DeleteBlogListener implements ShouldQueue
     /**
      * Handle the event.
      */
-    public function handle(DeleteBlogEvent $deletedData): void
+    public function handle(DeleteBlogEvent $event): void
     {
-        Mail::to(Auth::user()->email)->queue(new DeleteBlogMail($deletedData->deletedData));
+        Log::info("Data Cach From Event");
+        Mail::to(Auth::user()->email)->send(new DeleteBlogMail($event->set_name_for_listener));
+        Log::info('Data Pass To Mail');
     }
 }

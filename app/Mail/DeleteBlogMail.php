@@ -3,22 +3,23 @@
 namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Mail\Mailables\Content;
-use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Mail\Mailables\Envelope;
+use Illuminate\Contracts\Queue\ShouldQueue;
 
-class DeleteBlogMail extends Mailable
+class DeleteBlogMail extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
-    public $passBlade;
+    public $pass_to_blade;
     /**
      * Create a new message instance.
      */
-    public function __construct($deletedData)
+    public function __construct($set_name_for_listener)
     {
-        $this->passBlade = $deletedData;
+        $this->pass_to_blade = $set_name_for_listener;
     }
 
     /**
@@ -26,9 +27,11 @@ class DeleteBlogMail extends Mailable
      */
     public function envelope(): Envelope
     {
+        Log::info("Data Catch From Listener");
         return new Envelope(
             subject: 'Delete Blog Mail',
         );
+        Log::info('Subject Maked');
     }
 
     /**
@@ -53,6 +56,7 @@ class DeleteBlogMail extends Mailable
 
     public function build()
     {
-        return $this->view('backend.partials.deleteBlog', ['data' => $this->passBlade]);
+        return $this->view('backend.partials.deleteBlog', ['data' => $this->pass_to_blade]);
+        Log::info('Data Pass To Blade');
     }
 }
