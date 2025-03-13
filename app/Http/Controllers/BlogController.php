@@ -3,12 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\Models\Blog;
+use App\Models\User;
 use Illuminate\Http\Request;
+use App\Jobs\BlogDeleteEmail;
 use App\Events\BlogStoreEvent;
 use App\Events\DeleteBlogEvent;
 use Yajra\DataTables\DataTables;
 use Flasher\Prime\FlasherInterface;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Notification;
+use App\Notifications\BlogDeleteNotification;
+use App\Notifications\DeleteBlogNotification;
+use App\Notifications\BlogDeletedNotification;
 
 class BlogController extends Controller
 {
@@ -106,7 +113,7 @@ class BlogController extends Controller
         }
     }
     //delete blog
-    public function distroy($id, FlasherInterface $flasher)
+    public function destroy($id, FlasherInterface $flasher)
     {
         $model = Blog::findOrFail($id);
 
@@ -123,10 +130,15 @@ class BlogController extends Controller
         // Delete the blog post
         $model->delete();
 
-        // Fire the DeleteBlogEvent
-        event(new DeleteBlogEvent($model));
+        // Dispatch job to send email
+        $users = User::all();
 
-        Log::info("Blog Deleted: " . $model->title);
+        // Loop through users and send them the notification
+        foreach ($users as $user) {
+            $user->notify(new BlogDeleteNotification($model));
+        }
+
+
 
         return redirect()->route('admin')->with('warning', 'Data Deleted Successfully');
     }

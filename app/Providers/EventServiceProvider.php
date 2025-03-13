@@ -25,9 +25,6 @@ class EventServiceProvider extends ServiceProvider
         BlogStoreEvent::class => [
             StoreBlog::class,
         ],
-        DeleteBlogEvent::class => [
-            DeleteBlogListener::class,
-        ]
     ];
 
     /**

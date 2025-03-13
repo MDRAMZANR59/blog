@@ -21,5 +21,5 @@ Route::get('/admin/editBlog/{id}',[BlogController::class,'edit'])->name('editBlo
 //update blog
 Route::POST('/update/{id}',[BlogController::class,'update'])->name('update');
 //delete blog
-Route::get('/deleteBlog/{id}',[BlogController::class,'distroy'])->name('deleteBlog');
+Route::get('/deleteBlog/{id}',[BlogController::class,'destroy'])->name('deleteBlog');
 require __DIR__.'/auth.php';
